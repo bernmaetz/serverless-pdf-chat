@@ -40,13 +40,13 @@ def lambda_handler(event, context):
 
     bedrock_runtime = boto3.client(
         service_name="bedrock-runtime",
-        region_name="us-east-1",
+        region_name="eu-central-1",
     )
 
     embeddings = BedrockEmbeddings(
         model_id="amazon.titan-embed-text-v1",
         client=bedrock_runtime,
-        region_name="us-east-1",
+        region_name="eu-central-1",
     )
 
     index_creator = VectorstoreIndexCreator(
