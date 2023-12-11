@@ -63,7 +63,8 @@ def lambda_handler(event, context):
         return_source_documents=True,
     )
 
-    res = qa({"question": human_input})
+    #res = qa({"question": human_input})
+    res = qa({"question": human_input, "max_tokens_to_sample": 512})
 
     logger.info(res)
 
