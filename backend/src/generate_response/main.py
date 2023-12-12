@@ -39,7 +39,11 @@ def lambda_handler(event, context):
         client=bedrock_runtime,
         region_name="eu-central-1",
     ), Bedrock(
-        model_id="anthropic.claude-v2", client=bedrock_runtime, region_name="eu-central-1"
+        model_id="anthropic.claude-v2", 
+        client=bedrock_runtime, 
+        region_name="eu-central-1",
+        model_kwargs={"max_tokens_to_sample": 4096} # bm231212
+        #model_id="anthropic.claude-v2", client=bedrock_runtime, region_name="eu-central-1"
         #model_id="amazon.titan-embed-text-v1", client=bedrock_runtime, region_name="eu-central-1"
     )
     faiss_index = FAISS.load_local("/tmp", embeddings)
@@ -63,8 +67,9 @@ def lambda_handler(event, context):
         return_source_documents=True,
     )
 
-    #res = qa({"question": human_input})
-    res = qa({"question": human_input, "max_tokens_to_sample": 512})
+    res = qa({"question": human_input})
+    # bm231211 add "max_tokens_to_sample": - default is 200 - max is 4096
+    #res = qa({"question": human_input, "max_tokens_to_sample": 4096})
 
     logger.info(res)
 
